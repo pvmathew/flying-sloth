@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 import AddDocDialog from "../components/AddDocDialog";
+import NoteForm from "../components/AddDocForm";
 
 export default function NavBar() {
   const [showAddDocDialog, setShowAddDocDialog] = useState(false);
@@ -42,7 +43,7 @@ export default function NavBar() {
               variant="contained"
               onClick={() => setShowAddDocDialog(true)}
             >
-              Load another document
+              Upload Text
             </Button>
           </Box>
         </Box>
@@ -63,6 +64,7 @@ export default function NavBar() {
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             Add a document to load into this app.
           </Typography>
+          <NoteForm setOpen={setShowAddDocDialog}></NoteForm>
         </Paper>
       </Modal>
     </>
