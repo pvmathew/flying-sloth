@@ -1,3 +1,8 @@
 export default function DocsPage() {
-  return <div> Here is the doc reader page</div>;
+  return (
+    <div>
+      <title>AI Doc Chat</title>
+      Here is the doc reader page
+    </div>
+  );
 }

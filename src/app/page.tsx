@@ -12,8 +12,8 @@ import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 
 export default function Home() {
   return (
-    <Container sx={{ my: 2 }}>
-      <title>GenAI Doc Chat (PoC)</title>
+    <Container sx={{ my: 3 }}>
+      <title>Doc Chat Home</title>
       <Paper sx={{ p: 2 }}>
         <Typography variant="h4">GenAI Doc Reader</Typography>
         <Divider />
