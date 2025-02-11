@@ -1,11 +1,21 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Dispatch, SetStateAction } from "react";
 import { Document, Page } from "react-pdf";
+import { pdfjs } from "react-pdf";
 
-export default function PdfLoader() {
-  const [pdfFile, setPdfFile] = useState<File | null>(null);
+pdfjs.GlobalWorkerOptions.workerSrc = new URL(
+  "pdfjs-dist/build/pdf.worker.min.mjs",
+  import.meta.url
+).toString();
 
+export default function PdfLoader({
+  pdfFile,
+  setPdfFile,
+}: {
+  pdfFile: File | null;
+  setPdfFile: Dispatch<SetStateAction<File | null>>;
+}) {
   useEffect(() => {
     const loadPdf = async () => {
       const response = await fetch("/dummy.pdf"); // Fetch from /public/dummy.pdf
@@ -31,7 +41,8 @@ export default function PdfLoader() {
 }
 
 export const PDFViewer = () => {
-  const [numPages, setNumPages] = useState<number>();
+  const [pdfFile, setPdfFile] = useState<File | null>(null);
+  const [numPages, setNumPages] = useState<number>(0);
   const [pageNumber, setPageNumber] = useState<number>(1);
 
   function onDocumentLoadSuccess({ numPages }: { numPages: number }): void {
@@ -41,10 +52,19 @@ export const PDFViewer = () => {
   return (
     <div>
       PDF Loader
-      <PdfLoader></PdfLoader>
+      <PdfLoader pdfFile={pdfFile} setPdfFile={setPdfFile}></PdfLoader>
       PDF Viewer
-      <Document file={""} onLoadSuccess={onDocumentLoadSuccess}>
-        <Page pageNumber={pageNumber} />
+      <Document file={pdfFile} onLoadSuccess={onDocumentLoadSuccess}>
+        {Array.from({ length: numPages }).map((_, index) => {
+          return (
+            <Page
+              key={index}
+              pageNumber={index + 1}
+              renderTextLayer={false}
+              renderAnnotationLayer={false}
+            />
+          );
+        })}
       </Document>
       <p>
         Page {pageNumber} of {numPages}
