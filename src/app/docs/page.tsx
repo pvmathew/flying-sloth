@@ -1,8 +1,20 @@
-export default function DocsPage() {
+import prisma from "@/lib/db/prisma";
+import { auth } from "@clerk/nextjs/server";
+import { Box, Container, Typography } from "@mui/material";
+
+export default async function DocsPage() {
+  const { userId } = await auth();
+  if (!userId) {
+    throw Error("userId undefined");
+  }
+
+  const allDocs = await prisma.doc.findMany({ where: { userId } });
+
   return (
-    <div>
+    <Container sx={{ p: 4 }}>
       <title>AI Doc Chat</title>
-      Here is the doc reader page
-    </div>
+      <Typography>User ID: {userId}</Typography>
+      <Box>{JSON.stringify(allDocs)}</Box>
+    </Container>
   );
 }
