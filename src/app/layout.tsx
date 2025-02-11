@@ -5,6 +5,8 @@ import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
 import { Roboto } from "next/font/google";
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "./theme";
+import { ClerkProvider } from "@clerk/nextjs";
+import { Button } from "@mui/material";
 const roboto = Roboto({
   weight: ["300", "400", "500", "700"],
   subsets: ["latin"],
@@ -33,12 +35,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={roboto.variable}>
-        <ThemeProvider theme={theme}>
-          <AppRouterCacheProvider>{children}</AppRouterCacheProvider>
-        </ThemeProvider>
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en">
+        <body className={roboto.variable}>
+          <ThemeProvider theme={theme}>
+            <AppRouterCacheProvider>{children}</AppRouterCacheProvider>
+          </ThemeProvider>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
