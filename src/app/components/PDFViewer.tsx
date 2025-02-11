@@ -1,5 +1,6 @@
 "use client";
 
+import { Box, Button, Container, Paper, Typography } from "@mui/material";
 import { useState, useEffect, Dispatch, SetStateAction } from "react";
 import { Document, Page } from "react-pdf";
 import { pdfjs } from "react-pdf";
@@ -30,9 +31,13 @@ export default function PdfLoader({
   return (
     <div>
       {pdfFile ? (
-        <a href={URL.createObjectURL(pdfFile)} download="dummy.pdf">
-          Download PDF
-        </a>
+        <Button
+          href={URL.createObjectURL(pdfFile)}
+          download="dummy.pdf"
+          variant="contained"
+        >
+          Download This PDF
+        </Button>
       ) : (
         <p>Loading PDF...</p>
       )}
@@ -50,25 +55,28 @@ export const PDFViewer = () => {
   }
 
   return (
-    <div>
-      PDF Loader
+    <Box sx={{ my: 2 }}>
       <PdfLoader pdfFile={pdfFile} setPdfFile={setPdfFile}></PdfLoader>
-      PDF Viewer
       <Document file={pdfFile} onLoadSuccess={onDocumentLoadSuccess}>
         {Array.from({ length: numPages }).map((_, index) => {
           return (
-            <Page
-              key={index}
-              pageNumber={index + 1}
-              renderTextLayer={false}
-              renderAnnotationLayer={false}
-            />
+            <Box key={index + 1}>
+              <Box display="flex">
+                <Paper key={index} elevation={2} sx={{ py: 2, mt: 2, mb: 1 }}>
+                  <Page
+                    pageNumber={index + 1}
+                    renderTextLayer={false}
+                    renderAnnotationLayer={false}
+                  />
+                </Paper>
+              </Box>
+              <Typography>
+                Page {index + 1} of {numPages}
+              </Typography>
+            </Box>
           );
         })}
       </Document>
-      <p>
-        Page {pageNumber} of {numPages}
-      </p>
-    </div>
+    </Box>
   );
 };
