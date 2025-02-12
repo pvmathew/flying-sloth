@@ -1,3 +1,4 @@
+import { docsIndex } from "@/lib/db/pinecone";
 import prisma from "@/lib/db/prisma";
 import { getEmbedding } from "@/lib/openai";
 import { createDocSchema } from "@/lib/validation/doc";
@@ -21,12 +22,26 @@ export async function POST(req: Request) {
       return Response.json({ error: "Lacking auth" }, { status: 401 });
     }
 
-    const doc = await prisma.doc.create({
-      data: {
-        title,
-        content,
-        userId,
-      },
+    const embedding = await getEmbeddingForNote(title, content);
+
+    const doc = await prisma.$transaction(async (tx) => {
+      const doc = await tx.doc.create({
+        data: {
+          title,
+          content,
+          userId,
+        },
+      });
+
+      await docsIndex.upsert([
+        {
+          id: doc.id,
+          values: embedding,
+          metadata: { userId },
+        },
+      ]);
+
+      return doc;
     });
 
     return Response.json({ doc }, { status: 201 });
