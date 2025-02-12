@@ -6,3 +6,7 @@ export const createDocSchema = z.object({
 });
 
 export type CreateDocSchema = z.infer<typeof createDocSchema>;
+
+export const deleteDocSchema = z.object({
+  id: z.string().min(1),
+});

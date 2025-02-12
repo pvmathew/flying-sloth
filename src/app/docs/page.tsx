@@ -1,6 +1,15 @@
 import prisma from "@/lib/db/prisma";
 import { auth } from "@clerk/nextjs/server";
-import { Box, Container, Typography, Card, CardContent } from "@mui/material";
+import {
+  Box,
+  Container,
+  Typography,
+  Card,
+  CardContent,
+  Button,
+} from "@mui/material";
+import { useRouter } from "next/navigation";
+import { NoteCard } from "../components/NoteCard";
 
 export default async function DocsPage() {
   const { userId } = await auth();
@@ -9,6 +18,7 @@ export default async function DocsPage() {
   }
 
   const allDocs = await prisma.doc.findMany({ where: { userId } });
+
 
   return (
     <Container sx={{ p: 4 }}>
@@ -19,18 +29,7 @@ export default async function DocsPage() {
       </Typography>
       <Box sx={{ display: "flex", flexDirection: "column", gap: 2, mt: 2 }}>
         {allDocs.map((doc) => (
-          <Card key={doc.id} sx={{ p: 2 }}>
-            <CardContent>
-              <Typography variant="h6">{doc.title}</Typography>
-
-              <Typography variant="body2" color="text.secondary">
-                {doc.content}
-              </Typography>
-              <Typography variant="caption" color="text.secondary">
-                {new Date(doc.createdAt).toLocaleDateString()}
-              </Typography>
-            </CardContent>
-          </Card>
+          <NoteCard doc={doc}></NoteCard>
         ))}
       </Box>
     </Container>
