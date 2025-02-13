@@ -28,9 +28,9 @@ export default async function DocsPage() {
         Past Texts
       </Typography>
       <Box sx={{ display: "flex", flexDirection: "column", gap: 2, mt: 2 }}>
-        {/* {allDocs.map((doc) => (
+        {allDocs.map((doc) => (
           <NoteCard doc={doc}></NoteCard>
-        ))} */}
+        ))}
       </Box>
     </Container>
   );
