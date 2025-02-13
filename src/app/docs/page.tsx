@@ -14,11 +14,10 @@ import { NoteCard } from "../components/NoteCard";
 export default async function DocsPage() {
   const { userId } = await auth();
   if (!userId) {
-    throw Error("userId undefined");
+    return <div>Loading</div>;
   }
 
   const allDocs = await prisma.doc.findMany({ where: { userId } });
-
 
   return (
     <Container sx={{ p: 4 }}>
