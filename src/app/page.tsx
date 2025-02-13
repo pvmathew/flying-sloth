@@ -41,7 +41,7 @@ export default async function Home() {
         <Box sx={{ p: 2, display: "flex", flexDirection: "column", gap: 2 }}>
           <Typography>An AI-powered document reader by Pavin</Typography>
 
-          {userId ? (
+          {userId && userId.length > 0 ? (
             <Button href="/docs">Go To App</Button>
           ) : (
             <SignInButton>Login</SignInButton>
