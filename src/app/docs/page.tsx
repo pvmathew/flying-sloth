@@ -23,7 +23,6 @@ export default async function DocsPage() {
   return (
     <Container sx={{ p: 4 }}>
       <title>AI Doc Chat</title>
-      <Typography>Current User: {userId}</Typography>
       <Typography variant="h6" sx={{ mt: 3 }}>
         Past Texts
       </Typography>

@@ -26,7 +26,7 @@ export default function NavBar() {
           <Box sx={{ display: "flex", alignItems: "center" }}>
             <Image src={"/doc.png"} alt="doc logo" height={30} width={30} />
             <Link href="/docs">
-              <Typography fontWeight={600}>AI Doc Reader</Typography>
+              <Typography fontWeight={600}>AI Note & Doc Reader</Typography>
             </Link>
           </Box>
           <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
@@ -44,8 +44,15 @@ export default function NavBar() {
               variant="contained"
               onClick={() => setShowAddDocDialog(true)}
             >
+              TRY PDF
+            </Button>
+            <Button
+              variant="contained"
+              onClick={() => setShowAddDocDialog(true)}
+            >
               Upload Text
             </Button>
+
             <AIChatButton />
           </Box>
         </Box>
@@ -61,10 +68,10 @@ export default function NavBar() {
       >
         <Paper sx={{ w: "500px", h: "500px", p: 2 }}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            Add a document
+            Add a note
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Add a document to load into this app.
+            Add a note to save into your personal database.
           </Typography>
           <NoteForm setOpen={setShowAddDocDialog}></NoteForm>
         </Paper>

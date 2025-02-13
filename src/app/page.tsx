@@ -33,7 +33,7 @@ export default async function Home() {
           <Image src={"/doc.png"} alt="doc logo" height={50} width={50} />
           <Link href="/docs">
             <Typography fontWeight={600} variant="h4">
-              AI Doc Reader
+              AI Note & Doc Reader
             </Typography>
           </Link>
         </Box>
