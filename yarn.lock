@@ -2,10 +2,28 @@
 # yarn lockfile v1
 
 
+"@ai-sdk/openai@^1.1.10":
+  version "1.1.10"
+  resolved "https://registry.yarnpkg.com/@ai-sdk/openai/-/openai-1.1.10.tgz#bf2bc6402610e9086909e97918d3178bcae82587"
+  integrity sha512-GbKAUwNRksJBYsv4SxyKs8RP+fQfq+6hsLBTUwe3aejfH2yGAe/I0h+hoqfCDre4QCR7fVNgzGO9VPs47Pnikw==
+  dependencies:
+    "@ai-sdk/provider" "1.0.7"
+    "@ai-sdk/provider-utils" "2.1.7"
+
 "@ai-sdk/provider-utils@2.1.6":
   version "2.1.6"
   resolved "https://registry.yarnpkg.com/@ai-sdk/provider-utils/-/provider-utils-2.1.6.tgz#5b2bff2d44ffa8ec629109ea2b28d2a7528104b4"
   integrity sha512-Pfyaj0QZS22qyVn5Iz7IXcJ8nKIKlu2MeSAdKJzTwkAks7zdLaKVB+396Rqcp1bfQnxl7vaduQVMQiXUrgK8Gw==
+  dependencies:
+    "@ai-sdk/provider" "1.0.7"
+    eventsource-parser "^3.0.0"
+    nanoid "^3.3.8"
+    secure-json-parse "^2.7.0"
+
+"@ai-sdk/provider-utils@2.1.7":
+  version "2.1.7"
+  resolved "https://registry.yarnpkg.com/@ai-sdk/provider-utils/-/provider-utils-2.1.7.tgz#b644abce10e5b07388a0439b9b03a69d5fbe9d60"
+  integrity sha512-5pliIKahXPlx3PZNBL3TtOBosFftoCq8bUNYdLi2M3YPBdQen9G9mR1BCrhC5hhEk4i3XTM8boqYeuRN6kLfsA==
   dependencies:
     "@ai-sdk/provider" "1.0.7"
     eventsource-parser "^3.0.0"
@@ -29,6 +47,16 @@
     swr "^2.2.5"
     throttleit "2.1.0"
 
+"@ai-sdk/react@^1.1.13":
+  version "1.1.13"
+  resolved "https://registry.yarnpkg.com/@ai-sdk/react/-/react-1.1.13.tgz#77ed9c0c6d5cf86ccd0672bea535e60761e59bd4"
+  integrity sha512-gA4eJnElSDEaPjf38VYb2Grz6B4a9o9IXjm7wF1DeyED8LX4xrllzZL8nathyQlj644yQPLzpO2yy83pQCDolQ==
+  dependencies:
+    "@ai-sdk/provider-utils" "2.1.7"
+    "@ai-sdk/ui-utils" "1.1.13"
+    swr "^2.2.5"
+    throttleit "2.1.0"
+
 "@ai-sdk/ui-utils@1.1.11":
   version "1.1.11"
   resolved "https://registry.yarnpkg.com/@ai-sdk/ui-utils/-/ui-utils-1.1.11.tgz#ef49a85d4c9c8c8962f3e804fe440616af22377b"
@@ -36,6 +64,15 @@
   dependencies:
     "@ai-sdk/provider" "1.0.7"
     "@ai-sdk/provider-utils" "2.1.6"
+    zod-to-json-schema "^3.24.1"
+
+"@ai-sdk/ui-utils@1.1.13":
+  version "1.1.13"
+  resolved "https://registry.yarnpkg.com/@ai-sdk/ui-utils/-/ui-utils-1.1.13.tgz#1cd027dadc2f728165408fe5dd308ede1740dc46"
+  integrity sha512-79NmeAugHibjKxZDOTwkkmqsC5AgPDfsxEP5pcXF4dnyPIPdPaR3uESIyJ6W3a919/DCasnJBvYwV0h5rhc5fA==
+  dependencies:
+    "@ai-sdk/provider" "1.0.7"
+    "@ai-sdk/provider-utils" "2.1.7"
     zod-to-json-schema "^3.24.1"
 
 "@babel/code-frame@^7.0.0", "@babel/code-frame@^7.26.2":

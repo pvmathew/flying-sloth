@@ -1,7 +1,8 @@
-import { Box, Button, Paper } from "@mui/material";
-import { Message, useChat } from "ai/react";
+import { Avatar, Box, Button, Divider, Paper, Typography } from "@mui/material";
+import { Message, useChat } from "@ai-sdk/react";
 import { XCircle } from "lucide-react";
 import { useEffect, useRef } from "react";
+import { useUser } from "@clerk/nextjs";
 
 interface AIChatBoxProps {
   open: boolean;
@@ -9,15 +10,18 @@ interface AIChatBoxProps {
 }
 
 export const AIChatBox = ({ open, onClose }: AIChatBoxProps) => {
-  const {
-    messages,
-    input,
-    handleInputChange,
-    handleSubmit,
-    setMessages,
-    isLoading,
-    error,
-  } = useChat();
+  // const {
+  //   messages,
+  //   input,
+  //   handleInputChange,
+  //   handleSubmit,
+  //   setMessages,
+  //   isLoading,
+  //   error,
+  // } = useChat();
+
+  const { messages, input, handleInputChange, handleSubmit, setMessages } =
+    useChat();
 
   const inputRef = useRef<HTMLInputElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -57,7 +61,7 @@ export const AIChatBox = ({ open, onClose }: AIChatBoxProps) => {
       </Button>
       <Button
         onClick={onClose}
-        sx={{ position: "absolute", top: 8, right: 8, p: 0, mt: 2 }}
+        sx={{ position: "absolute", top: 8, right: 8, p: 0, mt: 2, mb: 10 }}
       >
         <XCircle size={30}></XCircle>
       </Button>
@@ -69,6 +73,7 @@ export const AIChatBox = ({ open, onClose }: AIChatBoxProps) => {
           boxShadow: 3, // Subtle shadow to make it stand out
           borderRadius: 2, // Rounded corners
           p: 2, // Padding inside the Paper
+          pt: 7,
           display: "flex",
           flexDirection: "column",
         }}
@@ -94,6 +99,26 @@ export const AIChatBox = ({ open, onClose }: AIChatBoxProps) => {
         <Box sx={{ display: "flex", flexDirection: "row" }}>
           <form onSubmit={handleSubmit}>
             <input
+              className="fixed dark:bg-zinc-900 bottom-0 w-full max-w-md p-2 mb-8 border border-zinc-300 dark:border-zinc-800 rounded shadow-xl"
+              value={input}
+              placeholder="Say something..."
+              onChange={handleInputChange}
+              style={{
+                flexGrow: 1,
+                padding: "8px",
+                border: "1px solid #ccc",
+                borderRadius: "4px",
+                marginRight: "8px",
+                background: "white",
+                color: "black",
+              }}
+            />
+            <Button type="submit" variant="contained" size="small">
+              Send
+            </Button>
+          </form>
+          {/* <form onSubmit={handleSubmit}>
+            <input
               type="text"
               value={input}
               onChange={handleInputChange}
@@ -105,13 +130,14 @@ export const AIChatBox = ({ open, onClose }: AIChatBoxProps) => {
                 borderRadius: "4px",
                 marginRight: "8px",
                 background: "white",
+                fontColor: "black"
               }}
-              ref={inputRef}
+              ref={inputRef}  
             />
-            <Button type="submit" variant="contained" size="small">
-              Send
-            </Button>
-          </form>
+            // <Button type="submit" variant="contained" size="small">
+            //   Send
+            // </Button>
+          </form> */}
         </Box>
       </Paper>
     </Box>
@@ -119,10 +145,43 @@ export const AIChatBox = ({ open, onClose }: AIChatBoxProps) => {
 };
 
 function ChatMessage({ message: { role, content } }: { message: Message }) {
+  const { user } = useUser();
+
   return (
-    <Box>
-      <Box>{role}</Box>
-      <Box>{content}</Box>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: role === "assistant" ? "row" : "row-reverse",
+        alignItems: "flex-start",
+        marginBottom: 2,
+      }}
+    >
+      <Avatar
+        sx={{
+          bgcolor: role === "assistant" ? "primary.main" : "secondary.main",
+          marginRight: 1,
+        }}
+      >
+        {role === "assistant" ? "🤖" : "👤"}
+      </Avatar>
+      <Paper
+        sx={{
+          padding: 2,
+          maxWidth: "70%",
+          backgroundColor: role === "assistant" ? "#f5f5f5" : "#e3f2fd",
+          borderRadius: 2,
+          boxShadow: 1,
+        }}
+      >
+        <Typography
+          variant="body2"
+          color="textSecondary"
+          sx={{ marginBottom: 1 }}
+        >
+          {role === "assistant" ? "DocMaster9000" : user?.fullName || "User"}
+        </Typography>
+        <Typography variant="body1">{content}</Typography>
+      </Paper>
     </Box>
   );
 }
