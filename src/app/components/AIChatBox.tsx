@@ -1,5 +1,5 @@
 import { Box, Button, Paper } from "@mui/material";
-import { useChat } from "ai/react";
+import { Message, useChat } from "ai/react";
 import { XCircle } from "lucide-react";
 
 interface AIChatBoxProps {
@@ -52,7 +52,7 @@ export const AIChatBox = ({ open, onClose }: AIChatBoxProps) => {
         <Box sx={{ flexGrow: 1, overflowY: "auto", marginBottom: 2 }}>
           {/* Messages would be displayed here */}
           {messages.map((msg, index) => (
-            <div key={index}>{msg.content}</div>
+            <ChatMessage message={msg} key={msg.id} />
           ))}
         </Box>
 
@@ -82,3 +82,12 @@ export const AIChatBox = ({ open, onClose }: AIChatBoxProps) => {
     </Box>
   );
 };
+
+function ChatMessage({ message: { role, content } }: { message: Message }) {
+  return (
+    <Box>
+      <Box>{role}</Box>
+      <Box>{content}</Box>
+    </Box>
+  );
+}
