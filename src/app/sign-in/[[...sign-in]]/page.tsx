@@ -1,10 +1,10 @@
-import { SignIn } from "@clerk/nextjs";
+import { SignedOut, SignIn } from "@clerk/nextjs";
 import { Container } from "@mui/material";
 
 export default function SignInPage() {
   return (
     <Container sx={{ display: "flex", justifyContent: "center", my: 6 }}>
-            <title>Doc Chat Signin</title>
+      <title>Doc Chat Signin</title>
       <SignIn />
     </Container>
   );

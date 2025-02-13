@@ -12,8 +12,10 @@ import { PDFViewer } from "./components/PDFViewer";
 import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
+import { auth } from "@clerk/nextjs/server";
 
-export default function Home() {
+export default async function Home() {
+  const { userId } = await auth();
   return (
     <Box
       sx={{
@@ -38,7 +40,12 @@ export default function Home() {
         <Divider></Divider>
         <Box sx={{ p: 2, display: "flex", flexDirection: "column", gap: 2 }}>
           <Typography>An AI-powered document reader by Pavin</Typography>
-          <SignInButton forceRedirectUrl={"/docs"}>Get Started </SignInButton>
+
+          {userId ? (
+            <Button href="/docs">Go To App</Button>
+          ) : (
+            <SignInButton>Login</SignInButton>
+          )}
         </Box>
       </Paper>
     </Box>
