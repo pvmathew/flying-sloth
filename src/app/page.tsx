@@ -43,7 +43,6 @@ export default async function Home() {
 
           {userId && userId.length > 0 ? (
             <>
-              <Typography>"User: " + {userId}</Typography>
               <Button href="/docs">Go To App</Button>
             </>
           ) : (
