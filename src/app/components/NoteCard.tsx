@@ -1,8 +1,13 @@
 "use client";
 import { Card, CardContent, Typography, Button } from "@mui/material";
+import { Prisma } from "@prisma/client";
 import { useRouter } from "next/navigation";
 
-export const NoteCard = ({ doc }) => {
+export const NoteCard = ({
+  doc,
+}: {
+  doc: { id: string; title: string; content: string | null; createdAt: Date };
+}) => {
   const router = useRouter();
   console.log(doc);
   const handleDelete = async (id: string) => {

@@ -1,8 +1,12 @@
 import { TextField, Button, Box } from "@mui/material";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 
-export default function NoteForm({ setOpen }) {
+export default function NoteForm({
+  setOpen,
+}: {
+  setOpen: Dispatch<SetStateAction<boolean>>;
+}) {
   const router = useRouter();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
