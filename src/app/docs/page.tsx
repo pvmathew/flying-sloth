@@ -18,7 +18,9 @@ export default async function DocsPage() {
   }
 
   // const allDocs = [];
-  const allDocs = await prisma.doc.findMany({ where: { userId } });
+  const allDocs = await prisma.doc.findMany({
+    where: { userId: "user_2stKbHGa7RyApfksOnAUZGKzdVk" },
+  });
   console.log(allDocs);
   console.log("does this page load");
 
