@@ -42,7 +42,10 @@ export default async function Home() {
           <Typography>An AI-powered document reader by Pavin</Typography>
 
           {userId && userId.length > 0 ? (
-            <Button href="/docs">Go To App</Button>
+            <>
+              <Typography>"User: " + {userId}</Typography>
+              <Button href="/docs">Go To App</Button>
+            </>
           ) : (
             <SignInButton>Login</SignInButton>
           )}
