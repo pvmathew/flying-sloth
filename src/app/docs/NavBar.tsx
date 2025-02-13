@@ -6,6 +6,7 @@ import Image from "next/image";
 import { useState } from "react";
 import AddDocDialog from "../components/AddDocDialog";
 import NoteForm from "../components/AddDocForm";
+import AIChatButton from "../components/AIChatButton";
 
 export default function NavBar() {
   const [showAddDocDialog, setShowAddDocDialog] = useState(false);
@@ -45,6 +46,7 @@ export default function NavBar() {
             >
               Upload Text
             </Button>
+            <AIChatButton />
           </Box>
         </Box>
       </Paper>
