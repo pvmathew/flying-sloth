@@ -19,8 +19,8 @@ export default async function DocsPage() {
 
   // const allDocs = [];
   const allDocs = await prisma.doc.findMany({ where: { userId } });
-
   console.log(allDocs);
+  console.log("does this page load");
 
   return (
     <Container sx={{ p: 4 }}>
