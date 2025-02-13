@@ -37,12 +37,8 @@ export default function Home() {
         </Box>
         <Divider></Divider>
         <Box sx={{ p: 2, display: "flex", flexDirection: "column", gap: 2 }}>
-          <Typography>
-            A GenAI-powered document reader created by Pavin Mathew
-          </Typography>
-          <Button variant="contained">
-            <Link href="/docs">Get Started</Link>
-          </Button>
+          <Typography>An AI-powered document reader by Pavin</Typography>
+          <SignInButton forceRedirectUrl={"/docs"}>Get Started </SignInButton>
         </Box>
       </Paper>
     </Box>
