@@ -1,6 +1,7 @@
 import { Box, Button, Paper } from "@mui/material";
 import { Message, useChat } from "ai/react";
 import { XCircle } from "lucide-react";
+import { useEffect, useRef } from "react";
 
 interface AIChatBoxProps {
   open: boolean;
@@ -18,6 +19,21 @@ export const AIChatBox = ({ open, onClose }: AIChatBoxProps) => {
     error,
   } = useChat();
 
+  const inputRef = useRef<HTMLInputElement>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    }
+  }, [messages]);
+
+  useEffect(() => {
+    if (open) {
+      inputRef.current?.focus();
+    }
+  }, [open]);
+
   return (
     <Box
       sx={{
@@ -30,6 +46,15 @@ export const AIChatBox = ({ open, onClose }: AIChatBoxProps) => {
         display: open ? "block" : "none", // Only show when open is true
       }}
     >
+      <Button
+        variant="contained"
+        size="small"
+        color="info"
+        sx={{ position: "absolute", top: 8, left: 8, mt: 2, ml: 2 }}
+        onClick={() => setMessages([])}
+      >
+        Clear Chat
+      </Button>
       <Button
         onClick={onClose}
         sx={{ position: "absolute", top: 8, right: 8, p: 0, mt: 2 }}
@@ -49,7 +74,16 @@ export const AIChatBox = ({ open, onClose }: AIChatBoxProps) => {
         }}
       >
         {/* Add message display area here */}
-        <Box sx={{ flexGrow: 1, overflowY: "auto", marginBottom: 2 }}>
+        <Box
+          sx={{
+            flexGrow: 1,
+            overflowY: "auto",
+            marginBottom: 2,
+            p: 2,
+            overflow: "auto",
+          }}
+          ref={scrollRef}
+        >
           {/* Messages would be displayed here */}
           {messages.map((msg, index) => (
             <ChatMessage message={msg} key={msg.id} />
@@ -72,6 +106,7 @@ export const AIChatBox = ({ open, onClose }: AIChatBoxProps) => {
                 marginRight: "8px",
                 background: "white",
               }}
+              ref={inputRef}
             />
             <Button type="submit" variant="contained" size="small">
               Send
