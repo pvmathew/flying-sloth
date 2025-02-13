@@ -160,6 +160,7 @@ function ChatMessage({ message: { role, content } }: { message: Message }) {
         sx={{
           bgcolor: role === "assistant" ? "primary.main" : "secondary.main",
           marginRight: 1,
+          marginLeft: 1,
         }}
       >
         {role === "assistant" ? "🤖" : "👤"}

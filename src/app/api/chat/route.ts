@@ -16,10 +16,53 @@ export async function POST(req: Request) {
 
     const messagesTruncated = messages.slice(-6);
 
+    // Embedding of the below: (ie)
+    // Hey, my favorite color is.. what again?
+    // Your favorite color is red
+    // Thank you! What is my favorite car?
+    // Creates an embedding from the 6 most recent mesages
+
+    const embedding = await getEmbedding(
+      messagesTruncated.map((msg) => msg.content).join("\n")
+    );
+    const { userId } = await auth();
+
+    // Vector embeddings from pinecone
+    const vectorQueryResponse = await docsIndex.query({
+      vector: embedding,
+      topK: 1, //Asking pinecone to return the top 1 most relevant note to this embedding
+      filter: { userId },
+    });
+
+    console.log(vectorQueryResponse);
+
+    const relevantnotes = await prisma.doc.findMany({
+      where: {
+        id: {
+          in: vectorQueryResponse.matches.map((match) => match.id),
+        },
+      },
+    });
+
+    const systemMessage: CoreMessage = {
+      role: "assistant",
+      content:
+        "You are an intelligent note-taking app. You answer the user's question based on their existing notes. " +
+        "The relevant notes for this query are: \n" +
+        relevantnotes
+          .map((note) => `title: ${note.title}\n\ncontent:\n${note.content}`)
+          .join("\n\n"),
+    };
+
     const result = streamText({
       model: openai("gpt-4o"),
-      messages,
+      messages: [systemMessage, ...messagesTruncated],
     });
+
+    // const result = streamText({
+    //   model: openai("gpt-4o"),
+    //   messages: messagesTruncated,
+    // });
 
     return result.toDataStreamResponse();
 
